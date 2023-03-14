@@ -8,6 +8,7 @@
 import UIKit
 
 struct OnboardingSlide {
+    var id : Int
     var title : String
     var details : String
     var image : UIImage

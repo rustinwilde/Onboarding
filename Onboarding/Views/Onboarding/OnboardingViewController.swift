@@ -7,8 +7,10 @@
 
 import UIKit
 
-class OnboardingViewController: UIViewController {
-
+class OnboardingViewController: UIViewController, UICollectionViewDataSource {
+    
+    
+    
     @IBOutlet weak var nextBtn: UIButton!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var pageControl: UIPageControl!
@@ -17,9 +19,11 @@ class OnboardingViewController: UIViewController {
     
     var slides : [OnboardingSlide] = []
     
+    var width : CGFloat!
+   
     
-    
-    var currentPage = 0 {
+   
+    var currentPage:Int = 0 {
         didSet {
             pageControl.currentPage = currentPage
             if currentPage == slides.count - 1 {
@@ -28,6 +32,8 @@ class OnboardingViewController: UIViewController {
             } else {
                 nextBtn.setTitle("Next", for: .normal)
                 nextBtn.backgroundColor = .systemBlue
+                
+                
             }
         }
     }
@@ -35,27 +41,20 @@ class OnboardingViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         nextBtn.titleLabel?.text = "Next"
         
-        
+        print("CURRENT PAGE \(currentPage)")
         
         slides = [
-//        OnboardingSlide(title: "Order Your Food",
-//                        details: "Now you can order food any time right from your phone.",
-//                        image: UIImage(named: "pic1")!),
-//        OnboardingSlide(title: "Fast Delivery",
-//                        details: "We will deliver any order within 30 minutes",
-//                        image: UIImage(named: "pic2")!),
-//        OnboardingSlide(title: "Customer Satisfaction",
-//                        details: "Our customers rely on us and highly recommend our services to their friends",
-//                        image: UIImage(named: "pic3")!)
-            .init(title: "Order Your Food", details: "Now you can order food any time right from your phone.", image: UIImage(named: "pic1")!),
-            .init(title: "Fast Delivery", details: "We will deliver any order within 30 minutes", image: UIImage(named: "pic2")!),
-            .init(title: "Customer Satisfaction", details: "Our customers rely on us and highly recommend our services to their friends", image: UIImage(named: "pic3")!)
+            
+            .init(id: 0, title: "Order Your Food", details: "Now you can order food any time right from your phone.", image: UIImage(named: "pic1")!),
+            .init(id: 1, title: "Fast Delivery", details: "We will deliver any order within 30 minutes", image: UIImage(named: "pic2")!),
+            .init(id: 2, title: "Customer Satisfaction", details: "Our customers rely on us and highly recommend our services to their friends", image: UIImage(named: "pic3")!)
         ]
         
-        
+        width = collectionView.frame.width
+        print("WIDTH IN VDL \(width)")
         
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -72,41 +71,49 @@ class OnboardingViewController: UIViewController {
     
     
     @IBAction func nextBtnClicked(_ sender: UIButton) {
-//        if currentPage == slides.count - 1 {
-//            print("Go to the next screen")
-//        } else {
-//            currentPage += 1
-//            print("CURRENT PAGE \(currentPage)")
-//            let indexPath = IndexPath(item: currentPage, section: 0)
-//            collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-//            nextBtn.backgroundColor = .blue
-//        }
         
-        pageControl.currentPage = currentPage
-
-        if currentPage == slides.count - 1 {
-        print("Go to the next screen")
+      
+      
+        if currentPage < slides.count - 1 || width == collectionView.contentSize.width {
             
-        } else {
-        nextBtn.setTitle("Next", for: .normal)
-        nextBtn.backgroundColor = .systemBlue
-        currentPage += 1
-        let indexPath = IndexPath(item: currentPage, section: 0)
-        collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally,
-        animated: true)
-            print("SLIDES: \(slides.count)")
+            nextBtn.setTitle("Next", for: .normal)
+            nextBtn.backgroundColor = .systemBlue
+            
+            
+            currentPage = currentPage + 1
+            let indexPath = IndexPath(item: currentPage, section: 0)
+            collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally,
+                                        animated: true)
+            
+            
+            self.collectionView.setContentOffset(CGPoint(x: width, y: 0), animated: true)
+            print("WIDTH BEFORE \(width!)")
+            width += collectionView.frame.width
             print("CURRENT PAGE \(currentPage)")
-            print("indexPath \(indexPath.item)")
+            print("COLLECTION VIEW FRAME \(self.collectionView.frame.width)")
+            print("WIDTH AFTER\(width!)")
         }
-    }
+        
+        else {
+            let controller = storyboard?.instantiateViewController(withIdentifier: "HomeScreen") as! UINavigationController
+            controller.modalPresentationStyle = .fullScreen
+            controller.modalTransitionStyle = .crossDissolve
+            present(controller, animated: true, completion: nil)
+            
+        }
+            
+        
+            //  nextBtn.addTarget(self, action: #selector(nextBtnPressed), for: .touchUpInside)
+        }
     
+//    @objc func nextBtnPressed () {
+//
+//    }
     
-
 }
 
 
-
-extension OnboardingViewController : UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+extension OnboardingViewController : UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         return slides.count
@@ -116,6 +123,7 @@ extension OnboardingViewController : UICollectionViewDataSource, UICollectionVie
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "OnboardingCVCell", for: indexPath) as! OnboardingCVCell
         cell.setup(slides[indexPath.row])
         cell.sliderImage.frame = CGRect(x: 60, y: 115, width: 260, height: 280)
+        
         
         return cell
     }
@@ -129,9 +137,8 @@ extension OnboardingViewController : UICollectionViewDataSource, UICollectionVie
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let width = scrollView.frame.width
         currentPage = Int(scrollView.contentOffset.x / width)
-       
         
-        print(currentPage)
+        print("CURRENT PAGE \(currentPage)")
         
         }
     

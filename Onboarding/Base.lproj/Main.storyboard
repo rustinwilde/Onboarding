@@ -17,7 +17,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="v35-Mq-vwZ">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" alwaysBounceHorizontal="YES" scrollEnabled="NO" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="v35-Mq-vwZ">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="wz2-33-5ql">
@@ -149,6 +149,53 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="128.80000000000001" y="-27.339901477832512"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="kYn-79-a1T">
+            <objects>
+                <viewController id="XKR-60-Eb4" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="N4s-Fy-LZc">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome, Rustin! 👋" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TIH-HN-hng">
+                                <rect key="frame" x="20" y="111" width="335" height="24"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="Hik-yN-jY9"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="TIH-HN-hng" firstAttribute="top" secondItem="Hik-yN-jY9" secondAttribute="top" constant="20" id="0Gd-As-jiM"/>
+                            <constraint firstItem="Hik-yN-jY9" firstAttribute="trailing" secondItem="TIH-HN-hng" secondAttribute="trailing" constant="20" id="7uB-eE-MNV"/>
+                            <constraint firstItem="TIH-HN-hng" firstAttribute="leading" secondItem="Hik-yN-jY9" secondAttribute="leading" constant="20" id="KO5-Jj-e0K"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="aX7-Hw-2x0"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YRu-77-W96" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1988" y="-27.339901477832512"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="aSo-Mg-0Qs">
+            <objects>
+                <navigationController storyboardIdentifier="HomeScreen" automaticallyAdjustsScrollViewInsets="NO" id="cHa-1X-fYs" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="UII-Xe-d2b">
+                        <rect key="frame" x="0.0" y="47" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="XKR-60-Eb4" kind="relationship" relationship="rootViewController" id="x9Q-gy-nvQ"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zFo-75-wbH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1045.5999999999999" y="-27.339901477832512"/>
         </scene>
     </scenes>
     <resources>
